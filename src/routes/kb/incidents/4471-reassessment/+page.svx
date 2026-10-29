@@ -14,9 +14,18 @@ signature: 'JoseAngelFer / MEGA.dev S01E03 / 2026-10-28'
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 </script>
 
-The [original incident](/kb/incidents/4471) says “one issue, one fix queued.” Its own computed view contradicts that conclusion. This reassessment uses the 2026-10-04 export, not access to a live support queue.
+The [original incident](/kb/incidents/4471) says “one issue, one fix queued.” Its own computed view contradicts that conclusion. This reassessment uses the 2026-10-04 export plus the engineering update published on the course Challenge page, not access to a live support queue.
 
 <Reassessment />
+
+## Engineering closure update · 5 October
+
+The [course Challenge page](https://hq.mega.dev/challenges/what-it-shows) now reports #4471 closed on 5 October, with separate dispositions:
+
+- **Parser — FIXED:** `fix(dates): parse dd/mm for eu locales`. [Our parser issue #1](https://github.com/JoseAngelFer/megadev-s01e03-what-it-shows/issues/1) is closed as completed on that evidence.
+- **Hint — WON'T FIX:** booking-v3 form retired. [Our hint issue #2](https://github.com/JoseAngelFer/megadev-s01e03-what-it-shows/issues/2) is closed as not planned, not fixed. Retirement removes that workflow; it is not a correction to its date hint.
+
+These are the desk's reported outcomes, not independently verified production tests. They do not explain or establish resolution of the five unusual reports below. Keep that uncertainty in the record and investigate any recurrence. The cause counts remain counts of the original export.
 
 ## Separate the engineering work
 

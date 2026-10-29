@@ -12,7 +12,7 @@ Public repo: https://github.com/JoseAngelFer/megadev-s01e03-what-it-shows
 
 Reproduce with `npm ci && npm run build` (Node 22). Build runs the actual exported TypeScript helpers through Vite and compiles .svx/Svelte with mdsvex, including the original layout, components and RenderStamp. HTML is a static server-rendered snapshot; the explorer's initial state and example table are rendered, but controls are not hydrated. Route links assume the `rendered/` directory is served with directory indexes at the web root. No hosted site or GitHub Pages is required.
 
-The original accepted decision is unchanged. Incident and triage pages have correction/review notices; proposed decision 0002 awaits desk approval. No production system has been changed. Counts are export-specific, not live. Five unusual reports remain explicitly unresolved within the classifier's parser total.
+The original accepted decision is unchanged. Incident and triage pages have correction/review notices; proposed decision 0002 awaits desk approval. No production system has been changed by this harness. The desk later reported #4471 closed 5 October: parser FIXED (`fix(dates): parse dd/mm for eu locales`), hint WON'T FIX (booking-v3 retired). Issue #1 is closed as completed; issue #2 as not planned. These are reported outcomes, not independently verified fixes. Counts are export-specific, not live. Five unusual reports remain explicitly unresolved within the classifier's parser total.
 
 ---
 
