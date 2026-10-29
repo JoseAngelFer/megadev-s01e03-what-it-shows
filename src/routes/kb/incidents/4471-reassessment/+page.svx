@@ -1,0 +1,44 @@
+---
+layout: runbook
+title: '#4471 reassessment · two causes hidden by one ticket'
+owner: JoseAngelFer
+status: investigated
+reviewed: '2026-10-28'
+signature: 'JoseAngelFer / MEGA.dev S01E03 / 2026-10-28'
+---
+
+<script>
+  import Reassessment from '#lib/kb/Reassessment.svelte';
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+The [original incident](/kb/incidents/4471) says “one issue, one fix queued.” Its own computed view contradicts that conclusion. This reassessment uses the 2026-10-04 export, not access to a live support queue.
+
+<Reassessment />
+
+## Separate the engineering work
+
+- [Parser ticket](https://github.com/JoseAngelFer/megadev-s01e03-what-it-shows/issues/1): the shared parser assumes month-first input for day-first tenants. R-41200 describes 7 April becoming 4 July; R-41203 describes 2 December becoming 12 February. Reproduce with day-first tenant input outside booking-v3's month-first form path. Parse an explicit format/locale, reject ambiguous unsupported inputs, and add round-trip tests. The tenant classifier also includes the unresolved one-day reports shown above: its count is not proof of their root cause.
+- [Form-hint ticket](https://github.com/JoseAngelFer/megadev-s01e03-what-it-shows/issues/2): booking-v3 prints MM/DD/YYYY while its form reads dates in the day-first tenant's order. R-41230 (copper.studio), R-41241 (alder.physio), and R-41251 (pale.harbour) illustrate this path. Make the hint and form parser agree; test each tenant's format. Fixing the shared parser alone does not fix misleading instructions on this form.
+
+`causes.ts` determines these groups with tenant locale, tenant form version and report channel. `locales.ts` loads every tenant file and `dayFirst()` asks Intl for field order. Browser locale and `meta.intakeTag` are intake guesses, not authoritative causes. Deduplicate by report ID before counting. Inspect bodies as well: the classifier does not inspect symptoms and can hide another problem.
+
+## Why the desk must change triage
+
+The [accepted decision 0001](/kb/decisions/0001-dedupe-by-subject) remains an unedited historical record. Its subject-only rule is not supported by the running examples: identical subjects can mean different causes; different subjects can mean the same cause. The page's accepted status is not evidence that the rule is safe. It was last reviewed in 2024 and the rendered layout flags its age.
+
+<DedupeExplorer />
+
+Use the [proposed replacement decision](/kb/decisions/0002-evidence-based-dedupe) for review. Until it is accepted, flag subject-only matches for human triage rather than silently treating the old policy as superseded. Stop feeding both causes into #4471: retain provenance, link existing reports to the correct engineering issue, and route new reports by evidence. Unknown tenants and contradictory symptoms need investigation, not automatic merging.
+
+This desk serves every product, not only sched-prod. Start with a product-scoped candidate match, then establish the same failure mechanism. Do not apply this booking-specific classifier as a universal rule for other products.
+
+## The desk kept working
+
+<QueueTimeline ticket={4471} />
+
+The timeline distinguishes when a report arrived from when it was merged. July's merge spike does not date the bug's onset. Re-export before applying changes to a live desk, reconcile new unique IDs, recompute counts, preserve historical links, and get the current desk owner's approval. Neither opening GitHub issues nor this page means a production fix was deployed.
+
+<RenderStamp {signature} />

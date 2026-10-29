@@ -1,0 +1,39 @@
+---
+layout: runbook
+title: '0002 · Proposed replacement: merge by evidence, not subject'
+owner: JoseAngelFer
+status: proposed
+reviewed: '2026-10-28'
+signature: 'JoseAngelFer / MEGA.dev S01E03 / 2026-10-28'
+---
+
+<script>
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## Context
+
+[Decision 0001](/kb/decisions/0001-dedupe-by-subject) is accepted history and is not edited. The [#4471 reassessment](/kb/incidents/4471-reassessment) shows that subject-only merging hid two mechanisms behind one known ticket. The support desk handles every product; a booking-specific classifier cannot define duplicates across the desk.
+
+## Proposed decision
+
+Supersede decision 0001 only after the support desk accepts this record. A matching subject is a search hint, not a merge decision.
+
+1. Establish the product and affected workflow; check tenant configuration and report body.
+2. Merge only when evidence supports the same failure mechanism and compatible reproduction. Different subjects do not prevent a merge; identical subjects do not justify one.
+3. For this booking incident, use tenant locale, form version and channel from the exported classifier, then check contradictory symptoms. Do not rely on intake tags or browser locale.
+4. For an unknown tenant, an unclassified product, conflicting evidence or a one-day/time-related symptom, leave a separate investigation item or queue for review. Ask for missing configuration, input, expected/actual result, timezone and timestamps. Do not manufacture a cause.
+5. Deduplicate report IDs, retain provenance and cross-links, count each report once, and reconcile new arrivals before updating live tickets.
+
+## Executable examples
+
+<DedupeExplorer />
+
+These demonstrate same-cause pairs across different channels/subjects and different-cause pairs with the same subject. Unknown tenants have no established cause and must not be auto-merged.
+
+## Consequences and rollout
+
+Human review costs time but avoids hiding unfixed bugs under a known ticket. Split existing reports by evidence, investigate the anomalous bodies, and audit incoming merges. Desk owners must approve rollout and monitor mismerges and unplaced reports. This proposal does not claim that current production triage has changed.
+
+<RenderStamp {signature} />
